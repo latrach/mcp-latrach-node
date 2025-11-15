@@ -1,17 +1,3 @@
-  # Déployer automatiquement sur Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args:
-      - 'run'
-      - 'deploy'
-      - 'mcp-latrach-node'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA'
-      - '--region'
-      - 'europe-west1'
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'
 
 steps:
   # Construire l'image Docker
@@ -19,20 +5,20 @@ steps:
     args:
       - build
       - -t
-      - gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA
+      - gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID
       - .
 
   # Pousser l'image vers Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - push
-      - gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA
+      - gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID
 
   # Tag avec 'latest'
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - tag
-      - gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA
+      - gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID
       - gcr.io/$PROJECT_ID/mcp-latrach-node:latest
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -48,7 +34,7 @@ steps:
       - deploy
       - mcp-latrach-node
       - --image
-      - gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA
+      - gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID
       - --region
       - europe-west1
       - --platform
@@ -56,7 +42,7 @@ steps:
       - --allow-unauthenticated
 
 images:
-  - 'gcr.io/$PROJECT_ID/mcp-latrach-node:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID'
   - 'gcr.io/$PROJECT_ID/mcp-latrach-node:latest'
 
 options:
