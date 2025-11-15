@@ -1,0 +1,40 @@
+{
+  "name": "mcp-latrach-node",
+  "version": "1.0.0",
+  "description": "Simple MCP server for deployment on GCP",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server-http.js",
+    "start:http": "node dist/server-http.js",
+    "start:stdio": "node dist/index.js",
+    "dev": "tsx watch src/server-http.ts",
+    "dev:http": "tsx watch src/server-http.ts",
+    "dev:stdio": "tsx watch src/index.ts",
+    "lint": "eslint src --ext .ts",
+    "test": "node --test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
