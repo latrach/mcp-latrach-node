@@ -189,6 +189,16 @@ Ajoutez cette étape à `cloudbuild.yaml`:
     - 'managed'
 ```
 
+## Tester l'image Docker localement
+
+Après avoir construit l'image, lancez le serveur MCP dans un conteneur Docker :
+
+```bash
+docker run --rm -p 8080:8080 gcr.io/mcp-latrach/mcp-latrach-node:latest
+```
+
+Vous pouvez ensuite accéder à l'API sur http://localhost:8080
+
 ## Structure du projet
 
 ```

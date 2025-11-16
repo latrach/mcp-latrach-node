@@ -22,7 +22,11 @@ const tools: Record<string, (args: any) => Promise<any>> = {};
 const toolsMeta: any[] = [];
 async function loadTools() {
 	const toolsDir = path.join(__dirname, 'tools');
-	const toolFiles = fs.readdirSync(toolsDir).filter(f => f.endsWith('.ts') && !f.endsWith('.meta.ts'));
+			const toolFiles = fs.readdirSync(toolsDir).filter(f =>
+				(f.endsWith('.js') || f.endsWith('.ts')) &&
+				!f.endsWith('.d.ts') &&
+				!f.endsWith('.d.js')
+			);
 	for (const file of toolFiles) {
 		const modulePath = path.join(toolsDir, file);
 		const toolModule = await import(modulePath);
