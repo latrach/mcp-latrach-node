@@ -40,6 +40,7 @@ steps:
       - --platform
       - managed
       - --allow-unauthenticated
+      - --verbosity=debug
 
 images:
   - 'gcr.io/$PROJECT_ID/mcp-latrach-node:$BUILD_ID'

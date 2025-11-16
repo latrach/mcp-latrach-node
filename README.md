@@ -1,4 +1,3 @@
-
 # MCP Latrach Node
 
 Un serveur MCP (Model Context Protocol) simple construit avec Node.js et TypeScript, prêt pour le déploiement sur Google Cloud Platform.
@@ -85,7 +84,8 @@ gcloud auth login
 gcloud config set account xxxxx@gmail.com
 # 3. Lancez le build et le déploiement :
 gcloud builds submit --config cloudbuild.yaml
-# Cloud Build va construire, pousser et déployer automatiquement sur Cloud Run
+# Cloud Build va construire, pousser et déployer automatiquement sur Cloud Run (avec accès public)
+# Pour éviter l'erreur Forbidden, assurez-vous que l'option --allow-unauthenticated est bien présente dans la commande de déploiement Cloud Run
 ```
 
 ### 4. Déployer sur Cloud Run
@@ -96,6 +96,22 @@ gcloud run deploy mcp-latrach-node \
   --region europe-west1 \
   --allow-unauthenticated
 ```
+
+### 5. Récupérer l'URL de l'application Cloud Run
+
+Après le déploiement, pour obtenir l'URL publique de votre service :
+
+```sh
+gcloud run services describe mcp-latrach-node --platform managed --region europe-west1 --format 'value(status.url)'
+```
+
+Ou pour lister tous les services et leurs URLs :
+
+```sh
+gcloud run services list --platform managed --region europe-west1
+```
+
+L'URL s'affichera dans la colonne "URL" pour le service `mcp-latrach-node`.
 
 Le serveur HTTP sera accessible via l'URL fournie par Cloud Run (port 8080 géré automatiquement). Voir [API_DOC.md](./API_DOC.md) pour la documentation de l'API REST.
 ## Fonctionnalités
