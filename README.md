@@ -43,20 +43,10 @@ COPY src ./src
 RUN npm run build
 EXPOSE 8080
 ENV PORT=8080
-CMD ["node", "dist/server-http.js"]
+CMD ["node", "dist/index.js"]
 ```
 
-### 3. Construire et pousser l'image Docker
-#
-# (Optionnel mais recommandé) Ajouter un tag d'environnement à votre projet GCP pour l'organisation :
-#
-# 1. Créer la clé de tag (à faire une seule fois, remplacez ORGANIZATION_ID par l'ID de votre organisation) :
-# gcloud resource-manager tags keys create environment --parent=organizations/ORGANIZATION_ID
-#
-# 2. Associer le tag à votre projet (remplacez Production par Development, Test ou Staging si besoin) :
-# gcloud resource-manager tags bindings create \
-#   --tag-value=environment/Production \
-#   --resource=//cloudresourcemanager.googleapis.com/projects/mcp-latrach
+### 3. Construire et pousser l'image Docker sur Google Container Registry (GCR)
 ```bash
 
 # Trouver l'ID de votre projet GCP (project_id)
@@ -117,7 +107,7 @@ Le serveur HTTP sera accessible via l'URL fournie par Cloud Run (port 8080 gér�
 ## Fonctionnalités
 
 - **Mode de fonctionnement HTTP:**
-  - **HTTP** (`server-http.ts`): Pour déploiement local ou sur GCP, écoute sur le port 8080
+  - **HTTP** (`index.ts`): Pour déploiement local ou sur GCP, écoute sur le port 8080
 
 - **Outils disponibles:**
   - `greet`: Salue une personne avec son nom
@@ -204,7 +194,7 @@ Ajoutez cette étape à `cloudbuild.yaml`:
 ```
 .
 ├── src/
-│   └── server-http.ts    # Code source principal
+│   └── index.ts          # Point d'entrée principal
 ├── dist/                 # Code compilé (généré)
 ├── package.json
 ├── tsconfig.json
